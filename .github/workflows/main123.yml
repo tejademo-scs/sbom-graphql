@@ -1,0 +1,42 @@
+name: Build & Test
+
+on: [pull_request]
+
+jobs:
+  aqua_scan:
+    name: Aqua_Scan
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step to enable cache for Trivy DB
+      - name: Cache Trivy DB
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/trivy
+          key: ${{ runner.os }}-trivy-db
+          restore-keys: |
+            ${{ runner.os }}-trivy-db
+
+      # Step to run Trivy vulnerability scanner in IaC mode
+      - name: Run Trivy vulnerability scanner
+        uses: docker://aquasec/aqua-scanner
+        with:
+          args: trivy ${{ inputs.scan-type }} --scanners ${{ inputs.security-checks }} --severity ${{ inputs.severity }}  --package-json .
+        env:
+          AQUA_KEY: "${{ secrets.aq_key }}"
+          AQUA_SECRET: "${{ secrets.aq_secret }}"
+          CSPM_URL: https://api.cloudsploit.com
+          AQUA_URL: https://api.supply-chain.cloud.aquasec.com
+          TRIVY_RUN_AS_PLUGIN: "aqua"
+          PACKAGE_JSON: "1"
+          GRADLE: "true"
+          SHOW-SUPPRESSED: "true"
+          REACHABILITY: "true"
+          GITHUB_TOKEN: "${{ github.token }}"
+
+      # Optional: Schedule the DB update as a cron job if needed for regular updates
+      - name: Schedule Trivy DB update
+        run: |
+          0 0 * * * trivy image --download-db-only
