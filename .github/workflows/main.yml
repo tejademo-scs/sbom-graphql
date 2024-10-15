@@ -76,7 +76,7 @@ jobs:
             --aqua-secret "${{ secrets.AQUA_SECRET }}" \
             --cspm-url https://api.cloudsploit.com \
             --artifact-path knightfortheright/mytest:v3 \
-            --TRIVY_USERNAME "${{ secrets.TRIVY_PASSWORD }}" \ 
+            --TRIVY_USERNAME "${{ secrets.TRIVY_USERNAME }}" \ 
             --TRIVY_PASSWORD "${{ secrets.TRIVY_PASSWORD }}" \
             --TRIVY_DB_REPOSITORY="registry.aquasec.com/trivy-db:2" \
             --TRIVY_JAVA_DB_REPOSITORT="registry.aquasec.com/trivy-java-db:1" \
