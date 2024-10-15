@@ -78,6 +78,6 @@ jobs:
             --aqua-secret "${{ secrets.AQUA_SECRET }}" \
             --cspm-url https://api.cloudsploit.com \
             --artifact-path knightfortheright/mytest:v3 \
-            --db-repository="registry.aquasec.com/trivy-db:2" \
+            --db-repository="registry.aquasec.com/trovydb:2" \
             --tiryv-java-db-repository="registry.aquasec.com/trivy-java-db:1" \
             --trivy-checks-bundle-repository="registry.aquasec.com/trivy-checks:1"
