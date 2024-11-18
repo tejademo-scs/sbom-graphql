@@ -80,4 +80,6 @@ jobs:
             --artifact-path knightfortheright/mytest:v3 \
             --db-repository="registry.aquasec.com/trivy-db:2" \
             --tiryv-java-db-repository="registry.aquasec.com/trivy-java-db:1" \
-            --trivy-checks-bundle-repository="registry.aquasec.com/trivy-checks:1"
+            --trivy-checks-bundle-repository="registry.aquasec.com/trivy-checks:1" \
+            --quiet \
+            --output billy.log
