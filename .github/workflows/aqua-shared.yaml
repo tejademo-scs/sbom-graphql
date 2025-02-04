@@ -11,6 +11,6 @@ on:
 
 jobs:
   call-shared-workflow:
-    uses: tejademo-scs/shared-repo/.github/workflows/shared-workflow.yaml  # Reference shared repo workflow
+    uses: tejademo-scs/shared-repo/.github/workflows/shared-workflow.yaml@main  # Reference shared repo workflow
     with:
       run-tests: true
