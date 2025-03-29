@@ -1,0 +1,153 @@
+{
+  "name": "5d-api",
+  "version": "1.0.19",
+  "description": "5D Application",
+  "main": "build/server/main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://iff.visualstudio.com/DefaultCollection/ngx-api/_git/ngx-api"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start": "nodemon --watch src/**/*.ts --exec ts-node src/main.ts",
+    "start:qas": "nodemon -V --exec ts-node src/main.ts --config nodemon-qas.json",
+    "start:prod": "nodemon -V --exec ts-node src/main.ts --config nodemon-prod.json",
+    "start:beta": "nodemon -V --exec ts-node src/main.ts --config nodemon-beta.json",
+    "pree2e": "webdriver-manager update",
+    "lint": "eslint --ext .ts ./src",
+    "lint:fix": "eslint --ext .ts ./src --fix",
+    "build:local": "tsc -p ./src",
+    "build:dev": "npm run clean:dest && webpack --env dev",
+    "build:qas": "npm run clean:dest && webpack --env qas",
+    "build:prod": "npm run clean:dest && webpack  --env prod --mode=production",
+    "build:beta": "npm run clean:dest && webpack --env beta",
+    "clean:dest": "rimraf dist",
+    "clean:build": "rimraf build",
+    "postcover": "node coveragePaths.js",
+    "test": "mocha --require chai src/test/**/*.test.ts --require ts-node/register --require source-map-support/register --recursive --timeout 150000 --exit",
+    "test:local": "npm run lint && mocha src/test/**/*.test.ts --require ts-node/register --require source-map-support/register --recursive --timeout 100000 --exit",
+    "cover": "nyc --reporter=lcov --reporter=text-lcov npm run test && npm run postcover",
+    "cover:local": "nyc npm test && npm run postcover"
+  },
+  "keywords": [
+    "typescript",
+    "mocha",
+    "sourcemaps",
+    "node",
+    "npm scripts",
+    "tsc"
+  ],
+  "dependencies": {
+    "@okta/jwt-verifier": "0.0.16",
+    "@types/body-parser": "1.17.0",
+    "@types/chai": "4.1.7",
+    "@types/express": "4.17.0",
+    "@types/lodash": "4.14.134",
+    "@types/mocha": "5.2.7",
+    "@types/node": "10.12.18",
+    "agentkeepalive": "4.0.2",
+    "async": "3.1.0",
+    "aws-sdk": "2.1051.0",
+    "body-parser": "1.19.0",
+    "chai": "4.2.0",
+    "chai-http": "4.3.0",
+    "compression": "1.7.4",
+    "cookie-parser": "1.4.4",
+    "copy-webpack-plugin": "10.2.4",
+    "cors": "2.8.5",
+    "dateformat": "^3.0.3",
+    "docxtemplater": "^3.14.1",
+    "dotenv": "^16.4.3",
+    "express": "4.17.1",
+    "express-paginate": "^1.0.0",
+    "express-winston": "3.3.0",
+    "guid-typescript": "^1.0.9",
+    "helmet": "^4.6.0",
+    "ip": "1.1.5",
+    "joi": "14.3.1",
+    "json-loader": "0.5.7",
+    "jsonwebtoken": "^8.5.1",
+    "jszip": "^2.6.1",
+    "jwk-to-pem": "2.0.1",
+    "jwks-rsa": "^3.1.0",
+    "lodash": "^4.17.15",
+    "mocha": "6.1.4",
+    "mocha-sonarqube-reporter": "1.0.1",
+    "moment": "^2.24.0",
+    "multer": "1.4.1",
+    "mysql2": "^1.6.5",
+    "nconf": "0.10.0",
+    "nodemailer": "6.2.1",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "nyc": "14.1.1",
+    "path": "0.12.7",
+    "pizzip": "^3.0.6",
+    "q": "^1.5.1",
+    "request": "2.88.0",
+    "rimraf": "2.6.3",
+    "sequelize": "5.8.9",
+    "string-builder": "^0.1.6",
+    "swagger-ui-express": "^5.0.0",
+    "tedious": "6.1.2",
+    "ts-loader": "9.2.7",
+    "ts-node": "10.7.0",
+    "typescript": "4.5.5",
+    "typescript-string-operations": "^1.3.1",
+    "webpack": "5.70.0",
+    "webpack-cli": "4.9.2",
+    "webpack-node-externals": "3.0.0",
+    "winston": "3.2.1",
+    "winston-daily-rotate-file": "4.4.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^3.8.0",
+    "@typescript-eslint/parser": "^3.8.0",
+    "concurrently": "4.1.0",
+    "convert-source-map": "1.6.0",
+    "eslint": "^7.6.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-security": "^1.4.0",
+    "eslint-plugin-sonarjs": "0.17.0",
+    "eslint-plugin-unicorn": "^21.0.0",
+    "nodemon": "1.19.1",
+    "webdriver-manager": "12.1.5"
+  },
+  "nyc": {
+    "include": [
+      "test/**/*.test.ts",
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "typings",
+      "**/*.d.ts",
+      "**/dist/**",
+      "**/logs/**",
+      "**/test/**",
+      "**/reports/**",
+      "**/*.js"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "json",
+      "html"
+    ],
+    "all": true,
+    "relative_files": true,
+    "report-dir": "./coverage"
+  },
+  "resolutions": {
+    "**/rc": "1.2.8"
+  },
+  "engines": {
+    "node": ">=16.20.0",
+    "npm": ">=8.19.4"
+  }
+}
